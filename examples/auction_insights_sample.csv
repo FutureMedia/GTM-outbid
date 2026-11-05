@@ -1,0 +1,7 @@
+Auction insights report
+Campaign: Example (synthetic data)
+Display URL domain,Impr. share,Overlap rate,Position above rate,Top of page rate,Abs. Top of page rate,Outranking share
+You,41.2%,--,--,63.0%,28.1%,--
+competitor-a.example,35.0%,58.4%,62.1%,70.2%,33.0%,31.5%
+competitor-b.example,< 10%,22.9%,18.0%,40.0%,12.0%,68.0%
+competitor-c.example,18.3%,44.7%,51.3%,55.0%,20.4%,44.0%

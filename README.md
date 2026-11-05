@@ -80,6 +80,24 @@ Set `CHROME_PATH` if Chrome is in a non-standard location. Set `GTM_RECON_UA` to
 
 Tracking parameters such as `gclid`, `gbraid` and `gad_*` add nothing. Drop them from the URL so the tool does not register fake ad clicks on someone else's account.
 
+## Bid planner: compare your economics with your own Google Ads exports
+
+Bids are not in the container, but your own Google Ads account can export useful estimates. [`scripts/bid_planner.py`](scripts/bid_planner.py) reads two CSV exports and your own numbers and tells you where you can afford to compete:
+
+- **Keyword Planner** (Tools, Keyword Planner, download keyword ideas): estimated top-of-page bid range per keyword.
+- **Auction Insights** (Campaigns, Ad groups or Keywords, Auction insights, Download): which competitors you overlap with and how often they are shown above you.
+- **Your economics:** the most you can pay per conversion (`--max-cpa`, or `--value` with `--margin`) and your expected click-to-conversion rate (`--cvr`).
+
+```bash
+python3 scripts/bid_planner.py \
+  --keywords keyword_planner.csv --auction auction_insights.csv \
+  --value 2000 --margin 0.25 --cvr 0.01
+```
+
+Your allowable max CPC is `allowable CPA x conversion rate`. Each keyword is then compared with Google's estimated range and marked: can compete at the top of the range, can compete within the range, or not viable. Competitors are listed by overlap with a note on who is usually shown above you. The output is a markdown table and a PDF. Try it with the synthetic files in [`examples/`](examples/).
+
+Only read-only access to your Google Ads account is needed. No login or API credentials are passed to this tool. The ranges are Google's market estimates, not any competitor's actual bids, and the result is only as good as your conversion-rate assumption. It never changes bids.
+
 ## Consent-gated sites
 
 Some sites load their Google tags only after the cookie banner is accepted. The script already looks in the HTML and in linked first-party scripts for the GTM ID, which is enough for many consent-gated sites. When that still returns nothing, the skill's instructions have the agent open the page in a browser, accept the banner, read the IDs from `window.google_tag_manager`, and re-run with `--gtm`. If you do not want banners accepted, remove step 2 from `SKILL.md`.
@@ -117,6 +135,8 @@ This tool deliberately does **not** complete conversions: no fake enquiries, sig
 SKILL.md                   instructions Claude follows when the skill runs
 scripts/gtm_recon.py       extractor, parser, report and PDF writer
 scripts/safe_interactions.js   in-page safe interaction probe
+scripts/bid_planner.py     Keyword Planner and Auction Insights CSVs vs your economics
+examples/                  synthetic sample CSVs for bid_planner.py
 LICENSE
 ```
 

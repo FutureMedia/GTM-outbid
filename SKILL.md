@@ -35,4 +35,8 @@ Reads only public data every visitor's browser downloads. It cannot see bids, bu
 
 6. State the caveats when interpreting: values are often dynamic or missing; a conversion value is the advertiser's internal figure, not a bid ceiling; the event list is everything the container can fire, not an ordered funnel; server-side GTM hides most of this.
 
-7. Only if the user asks for bid suggestions: get their own conversion value, margin and Auction Insights or CPC data, compare economics, name the keywords where they have the advantage, and recommend changes for them to approve. Never change live bids automatically.
+7. Bid suggestions (only if the user asks). Bids are not in the container, so use the user's own Google Ads exports with `scripts/bid_planner.py`. Ask for: (a) Keyword Planner CSV (Tools, Keyword Planner, download keyword ideas), (b) optionally an Auction Insights CSV (Campaigns/Ad groups/Keywords, Auction insights, Download), (c) their conversion value and margin, or max CPA, and (d) their expected click-to-conversion rate. Then run:
+   ```bash
+   python3 scripts/bid_planner.py --keywords kp.csv [--auction ai.csv] --value 2000 --margin 0.25 --cvr 0.01
+   ```
+   Present the keyword verdicts and competitor table. State that ranges are Google's estimates, not competitor bids, and that the result depends on the conversion-rate assumption. Do not guess a conversion rate; ask. Recommend changes for the user to approve and never change live bids.
