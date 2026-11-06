@@ -26,12 +26,12 @@ For each URL:
 
 ## What it can and cannot tell you
 
-| Can | Cannot |
-| --- | --- |
-| Which conversions a site tracks and what fires them | What the advertiser bids or spends |
-| Event names, often in the order the funnel suggests | Quality Score, Ad Rank, bid strategy |
-| Hard-coded conversion values, when they exist | Dynamic values (these come from the page at runtime) |
-| Which tags are consent-gated | Anything behind server-side GTM |
+| Can                                                 | Cannot                                               |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| Which conversions a site tracks and what fires them | What the advertiser bids or spends                   |
+| Event names, often in the order the funnel suggests | Quality Score, Ad Rank, bid strategy                 |
+| Hard-coded conversion values, when they exist       | Dynamic values (these come from the page at runtime) |
+| Which tags are consent-gated                        | Anything behind server-side GTM                      |
 
 A conversion value is the advertiser's own figure sent to Google after a conversion. It is **not** a bid ceiling. With Smart Bidding (tCPA, tROAS) real cost per click depends on bid strategy, Quality Score and margin, none of which appear in the container. When the tool runs, the bid/budget scan prints how many parameters it checked and what it found. On every container we have tried it found none.
 
@@ -42,7 +42,7 @@ Requires Python 3.8+ (standard library only). Google Chrome or Chromium is optio
 **As a Claude Code skill:**
 
 ```bash
-git clone https://github.com/<your-org>/gtm-recon ~/.claude/skills/gtm-recon
+git clone https://github.com/FutureMedia/gtm-recon ~/.claude/skills/gtm-recon
 ```
 
 Then in Claude Code: `/gtm-recon https://example.com`
