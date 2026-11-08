@@ -26,7 +26,7 @@ import sys
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import gtm_recon  # noqa: E402  (shares CSS and Chrome lookup with the recon report)
+import gtm_outbid  # noqa: E402  (shares CSS and Chrome lookup with the recon report)
 
 
 def read_table(path, keywords):
@@ -148,11 +148,11 @@ def render_html(ctx):
         p.append("<h2>Competitors</h2><table><tr><th>Domain</th><th>Overlap</th><th>Position above you</th>"
                  "<th>You outrank</th><th>Note</th></tr>%s</table>" % rows)
     p.append('<p class="foot">%s</p>' % e(ctx["disclaimer"]))
-    return "<!doctype html><meta charset=utf-8><style>%s</style>%s" % (gtm_recon.CSS, "".join(p))
+    return "<!doctype html><meta charset=utf-8><style>%s</style>%s" % (gtm_outbid.CSS, "".join(p))
 
 
 def write_pdf(ctx, outdir):
-    chrome = gtm_recon.find_chrome()
+    chrome = gtm_outbid.find_chrome()
     if not chrome:
         print("PDF skipped: Chrome/Chromium not found (set CHROME_PATH)", file=sys.stderr)
         return None

@@ -1,12 +1,12 @@
 ---
-name: gtm-recon
-description: Given a URL or domain, extract the site's publicly visible Google Tag Manager setup (GTM, Google Ads and GA4 IDs, conversion tags, event triggers, hard-coded values), optionally record safe dataLayer events, and save a PDF report. Use when invoked as /gtm-recon <url>, or when asked to analyse a competitor's or our own conversions, funnel events or conversion values, or to decide where to compete on keywords. Built by Future Media.
+name: GTM-outbid
+description: Given a URL or domain, extract the site's publicly visible Google Tag Manager setup (GTM, Google Ads and GA4 IDs, conversion tags, event triggers, hard-coded values), optionally record safe dataLayer events, and save a PDF report. Use when invoked as /GTM-outbid <url>, or when asked to analyse a competitor's or our own conversions, funnel events or conversion values, or to decide where to compete on keywords. Built by Future Media.
 argument-hint: <url> [more urls]
 ---
 
-# gtm-recon
+# GTM-outbid
 
-Usage: `/gtm-recon https://example.com` (one or more URLs or domains, or a `.txt` file with one URL per line; blank lines and `#` comments are ignored).
+Usage: `/GTM-outbid https://example.com` (one or more URLs or domains, or a `.txt` file with one URL per line; blank lines and `#` comments are ignored).
 
 Reads only public data every visitor's browser downloads. It cannot see bids, budgets, Quality Score or bid strategy; never claim it does. The report's bid/budget scan states how many parameters were checked and what was found; quote it if the user asks about bids.
 
@@ -14,7 +14,7 @@ Reads only public data every visitor's browser downloads. It cannot see bids, bu
 
 1. Run the extractor on every URL the user gave. Strip tracking parameters (`gclid`, `gbraid`, `gad_*`, `utm_*`) first; they add nothing and could register as fake ad clicks. The script prints a markdown report and writes a PDF to `reports/`:
    ```bash
-   python3 scripts/gtm_recon.py <url> [<url> ...]
+   python3 scripts/gtm_outbid.py <url> [<url> ...]
    ```
    Flags: `--gtm GTM-XXXX` supply a container ID found in the browser, `--observed events.json` add safe-interaction events (one URL only), `--json`, `--no-pdf`, `--out DIR`. The PDF needs Chrome or Chromium (`CHROME_PATH` to override).
 
@@ -22,7 +22,7 @@ Reads only public data every visitor's browser downloads. It cannot see bids, bu
    - Open the plain page URL in the built-in browser.
    - Click the banner's accept button ("Accept all", "Accept", "Allow all", "Agree"). Never click "Reject" or settings-only buttons. If the banner is only an informational notice and tags are already loaded, click nothing.
    - Wait about 5 seconds, then run in the page: `Object.keys(window.google_tag_manager||{}).filter(k=>/^(GTM|G|AW)-/.test(k))`
-   - Re-run the script with each ID found: `... gtm_recon.py <url> --gtm GTM-XXXX`.
+   - Re-run the script with each ID found: `... gtm_outbid.py <url> --gtm GTM-XXXX`.
    - If there is still no banner or no tags, say so; the site may use server-side tagging.
 
 3. Safe interaction run (optional, when the user wants more than the static config). With the page open in the built-in browser, run the contents of `scripts/safe_interactions.js` in the page. It scrolls and clicks a few allowlisted, non-submitting controls and returns JSON of the `dataLayer` events pushed. Save that JSON to a file and re-run the script with `--observed <file>`.

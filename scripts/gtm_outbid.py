@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Extract publicly visible tracking config (GTM / Google Ads) from a domain.
 
-Usage: gtm_recon.py URL_OR_DOMAIN_OR_LIST.txt [more ...] [--gtm GTM-XXXX] [--observed events.json] [--json] [--no-pdf] [--out DIR]
+Usage: gtm_outbid.py URL_OR_DOMAIN_OR_LIST.txt [more ...] [--gtm GTM-XXXX] [--observed events.json] [--json] [--no-pdf] [--out DIR]
 
 Prints a markdown report and, by default, writes one PDF per run to
 ./reports/ (rendered with headless Chrome).
@@ -22,8 +22,8 @@ import time
 import urllib.request
 from urllib.parse import urljoin, urlparse
 
-# Many sites 403 non-browser user agents. Override with GTM_RECON_UA if you prefer to identify yourself.
-UA = os.environ.get("GTM_RECON_UA") or "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
+# Many sites 403 non-browser user agents. Override with GTM_OUTBID_UA if you prefer to identify yourself.
+UA = os.environ.get("GTM_OUTBID_UA") or "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
 MAX_BYTES = 8 * 1024 * 1024
 
 
@@ -435,7 +435,7 @@ def write_pdf(results, outdir):
         print("PDF skipped: Chrome/Chromium not found (set CHROME_PATH)", file=sys.stderr)
         return None
     os.makedirs(outdir, exist_ok=True)
-    name = "gtm-recon-%s-%s.pdf" % ("_".join(re.sub(r"[^\w.-]", "", r["domain"]) for r in results)[:80],
+    name = "GTM-outbid-%s-%s.pdf" % ("_".join(re.sub(r"[^\w.-]", "", r["domain"]) for r in results)[:80],
                                    datetime.date.today().isoformat())
     pdf = os.path.abspath(os.path.join(outdir, name))
     with tempfile.TemporaryDirectory() as d:

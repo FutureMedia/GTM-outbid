@@ -1,9 +1,9 @@
-// Safe-interaction probe for gtm-recon.
+// Safe-interaction probe for GTM-outbid.
 //
 // Run inside the target page (browser console, or the browser tool's javascript step).
 // It performs only harmless interactions, records what the page pushes to
 // window.dataLayer, and returns JSON you can save and pass to
-//   gtm_recon.py <url> --observed events.json
+//   gtm_outbid.py <url> --observed events.json
 //
 // What it does:   scrolls the page in steps; clicks at most MAX_CLICKS buttons/links whose
 //                 label matches SAFE_LABEL, once each, skipping anything that looks like a

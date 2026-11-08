@@ -1,4 +1,4 @@
-# gtm-recon
+# GTM-outbid
 
 Read a website's **publicly visible Google Tag Manager setup** and turn it into a short report (markdown and PDF): which Google Ads conversions it fires, which GA4 events exist, what triggers each one, and whether any conversion value is hard-coded.
 
@@ -42,41 +42,41 @@ Requires Python 3.8+ (standard library only). Google Chrome or Chromium is optio
 **As a Claude Code skill:**
 
 ```bash
-git clone https://github.com/FutureMedia/gtm-recon ~/.claude/skills/gtm-recon
+git clone https://github.com/FutureMedia/GTM-outbid ~/.claude/skills/GTM-outbid
 ```
 
-Then in Claude Code: `/gtm-recon https://example.com`
+Then in Claude Code: `/GTM-outbid https://example.com`
 
 **As a command-line tool:**
 
 ```bash
-python3 scripts/gtm_recon.py https://example.com
+python3 scripts/gtm_outbid.py https://example.com
 ```
 
 ## Usage
 
 ```bash
 # one or more URLs or domains
-python3 scripts/gtm_recon.py https://example.com another.com
+python3 scripts/gtm_outbid.py https://example.com another.com
 
 # a text file with one URL per line (blank lines and # comments are ignored)
-python3 scripts/gtm_recon.py sites.txt
+python3 scripts/gtm_outbid.py sites.txt
 
 # skip the PDF, or choose where it goes
-python3 scripts/gtm_recon.py example.com --no-pdf
-python3 scripts/gtm_recon.py example.com --out ./my-reports
+python3 scripts/gtm_outbid.py example.com --no-pdf
+python3 scripts/gtm_outbid.py example.com --out ./my-reports
 
 # structured output
-python3 scripts/gtm_recon.py example.com --json
+python3 scripts/gtm_outbid.py example.com --json
 
 # supply a container ID found in a browser (for consent-gated or blocked sites)
-python3 scripts/gtm_recon.py example.com --gtm GTM-XXXX
+python3 scripts/gtm_outbid.py example.com --gtm GTM-XXXX
 
 # add events captured by a safe interaction run (single URL)
-python3 scripts/gtm_recon.py example.com --gtm GTM-XXXX --observed events.json
+python3 scripts/gtm_outbid.py example.com --gtm GTM-XXXX --observed events.json
 ```
 
-Set `CHROME_PATH` if Chrome is in a non-standard location. Set `GTM_RECON_UA` to use your own User-Agent string. The default is a browser-like one because many sites return 403 to scripts.
+Set `CHROME_PATH` if Chrome is in a non-standard location. Set `GTM_OUTBID_UA` to use your own User-Agent string. The default is a browser-like one because many sites return 403 to scripts.
 
 Tracking parameters such as `gclid`, `gbraid` and `gad_*` add nothing. Drop them from the URL so the tool does not register fake ad clicks on someone else's account.
 
@@ -133,7 +133,7 @@ This tool deliberately does **not** complete conversions: no fake enquiries, sig
 
 ```
 SKILL.md                   instructions Claude follows when the skill runs
-scripts/gtm_recon.py       extractor, parser, report and PDF writer
+scripts/gtm_outbid.py       extractor, parser, report and PDF writer
 scripts/safe_interactions.js   in-page safe interaction probe
 scripts/bid_planner.py     Keyword Planner and Auction Insights CSVs vs your economics
 examples/                  synthetic sample CSVs for bid_planner.py
