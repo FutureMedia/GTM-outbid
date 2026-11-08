@@ -1,10 +1,13 @@
 # GTM-outbid
 
+## Competitor GTM tracking analysis
+
 Read a website's **publicly visible Google Tag Manager setup** and turn it into a short report (markdown and PDF): which Google Ads conversions it fires, which GA4 events exist, what triggers each one, and whether any conversion value is hard-coded.
 
 Built by Future Media as a Claude Code skill, and usable as a plain Python command-line tool.
 
-> **What it is not.** It does **not** reveal competitor bids, budgets, Quality Score or bid strategy. Those live inside Google's ad systems and are never sent to a visitor's browser. See [What it can and cannot tell you](#what-it-can-and-cannot-tell-you).
+> **How it helps in bidding.** It shows what a competitor measures and values, so you can decide where to raise bids on your own account. See [Outbidding](#outbidding).
+> **What it is not.** It does **not** directly reveal competitor bids, budgets, Quality Score or bid strategy. Those live inside Google's ad systems and are never sent to a visitor's browser. See [What it can and cannot tell you](#what-it-can-and-cannot-tell-you).
 
 ## Why it exists
 
@@ -34,6 +37,17 @@ For each URL:
 | Which tags are consent-gated                        | Anything behind server-side GTM                      |
 
 A conversion value is the advertiser's own figure sent to Google after a conversion. It is **not** a bid ceiling. With Smart Bidding (tCPA, tROAS) real cost per click depends on bid strategy, Quality Score and margin, none of which appear in the container. When the tool runs, the bid/budget scan prints how many parameters it checked and what it found. On every container we have tried it found none.
+
+## Outbidding
+
+The tool does not show anyone's bids. It shows what a competitor measures and values, so you can decide where to raise bids on your own account:
+
+1. **Find their primary conversion.** Of all the conversions a competitor tracks, see which one the setup is built around and what value, if any, they assigned to it.
+2. **Compare it with your own economics.** If a lead is worth $2,000 to you at a 25% margin and about $800 to them, you can afford a higher cost per acquisition on shared keywords.
+3. **Choose where to compete.** Raise bids or targets only on keywords where you hold that advantage, and back off where you don't.
+4. **Check it against your own data.** The [bid planner](#bid-planner-compare-your-economics-with-your-own-google-ads-exports) combines your Keyword Planner and Auction Insights exports with your max CPA and conversion rate, marks each keyword as can compete at the top of the range, within the range, or not viable, and lists the competitors you overlap with most.
+
+Outbidding is not just a higher bid. Position is set by Ad Rank (bid × expected CTR × ad relevance × landing page experience), and you pay only the minimum needed to beat the advertiser below you. Treat what you learn about a competitor as a hypothesis, confirm it against your own Auction Insights and CPCs, and approve every bid change yourself. The tool never changes bids.
 
 ## Install
 
